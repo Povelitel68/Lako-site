@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Салон красоты — маникюр, педикюр, брови, ресницы | Воронеж</title>
+<meta name="description" content="Салон красоты в Воронеже. Маникюр, педикюр, покрытие гель-лак, брови, ресницы. Онлайн-запись, акции, счастливые часы.">
+<meta name="geo.region" content="RU-VOR">
+<meta name="geo.placename" content="Воронеж">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #d4848c;
+    --rose-dark: #b87a82;
+    --rose-light: #fdf2f3;
+    --rose-soft: #fbe6e8;
+    --bg: #fdf2f3;
+    --text: #292524;
+    --card: #ffffff;
+  }
+  [data-theme="dark"] {
+    --bg: #1c1917;
+    --text: #f5f5f4;
+    --card: #292524;
+    --rose-light: #292524;
+    --rose-soft: #3f3233;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); transition: background .3s, color .3s; }
+  h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
+  .hero-bg {
+    background: linear-gradient(135deg, rgba(248,215,218,0.88), rgba(232,160,168,0.92)),
+                url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1600&q=80') center/cover;
+  }
+  .card-hover { transition: all .3s ease; }
+  .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(232,160,168,.25); }
+  .rose { color: var(--rose); }
+  .bg-rose { background-color: var(--rose); }
+  .bg-rose-light { background-color: var(--rose-light); }
+  .bg-rose-soft { background-color: var(--rose-soft); }
+  html { scroll-behavior: smooth; }
+  .photo-slot {
+    background: repeating-linear-gradient(45deg, #fdf2f3, #fdf2f3 12px, #fbe6e8 12px, #fbe6e8 24px);
+    border: 2px dashed var(--rose);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 1.5rem; color: var(--rose-dark);
+    border-radius: 1.5rem;
+  }
+  .photo-slot-icon { font-size: 2.5rem; margin-bottom: .5rem; opacity: .7; }
+  .strikethrough { text-decoration: line-through; opacity: .6; }
+  .timer-box { background: linear-gradient(135deg, var(--rose), var(--rose-dark)); }
+  @keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: .7; } }
+  .pulse-soft { animation: pulse-soft 2s infinite; }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-in { animation: fadeInUp .8s ease-out both; }
+  .float-btn {
+    position: fixed; bottom: 20px; right: 20px; z-index: 50;
+    background: #25D366; color: white; width: 60px; height: 60px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(37,211,102,.4);
+    transition: transform .3s;
+  }
+  .float-btn:hover { transform: scale(1.1); }
+  .theme-toggle {
+    position: fixed; top: 80px; right: 20px; z-index: 50;
+    background: var(--card); color: var(--text); width: 44px; height: 44px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,.1); cursor: pointer;
+    border: 1px solid var(--rose-soft);
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" title="Сменить тему">
+  <span id="themeIcon">🌙</span>
+</button>
+
+<a href="#" id="whatsappFloat" class="float-btn" target="_blank" title="Написать в WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<div class="bg-rose-soft border-b border-rose/30 text-rose text-xs sm:text-sm text-center py-2 px-4">
+  <strong>Демо-версия сайта.</strong> Создана для демонстрации. Не является официальным сайтом салона. Все фото — плейсхолдеры: пришлите свои, и они встанут автоматически.
+</div>
+
+<header class="sticky top-0 z-40 backdrop-blur border-b" style="background: color-mix(in srgb, var(--card) 95%, transparent); border-color: var(--rose-soft);">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="#" class="serif text-3xl font-bold tracking-wide" id="headerName">Салон</a>
+    <nav class="hidden md:flex gap-6 text-sm font-medium">
+      <a href="#services" class="hover:text-rose">Услуги</a>
+      <a href="#masters" class="hover:text-rose">Мастера</a>
+      <a href="#gallery" class="hover:text-rose">Работы</a>
+      <a href="#promo" class="hover:text-rose">Акции</a>
+      <a href="#contacts" class="hover:text-rose">Контакты</a>
+    </nav>
+    <a href="#" id="headerPhone" class="bg-rose hover:opacity-80 text-white px-5 py-2 rounded-full text-sm font-medium transition">Позвонить</a>
+  </div>
+</header>
+
+<section class="hero-bg text-white">
+  <div class="max-w-6xl mx-auto px-4 py-20 md:py-28">
+    <p class="bg-white/90 text-rose uppercase tracking-[0.3em] text-xs mb-4 inline-block px-4 py-2 rounded-full">Салон красоты в <span id="heroCity">городе</span></p>
+    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6 max-w-3xl drop-shadow-lg">
+      Красота в деталях — <span id="heroAddress">по адресу</span>
+    </h1>
+    <p class="text-lg md:text-xl text-white/95 max-w-2xl mb-8 drop-shadow" id="heroDescription">
+      Маникюр, педикюр, покрытие гель-лак, брови, ресницы.
+    </p>
+
+    <div class="timer-box inline-block px-6 py-4 rounded-3xl shadow-lg mb-8 text-white">
+      <p class="text-xs uppercase tracking-wider mb-1 pulse-soft">🔥 Акция недели</p>
+      <p class="text-2xl font-bold mb-1" id="promoTitle">Название акции</p>
+      <p class="text-3xl font-bold"><span class="strikethrough text-xl" id="promoOld">0 ₽</span> <span id="promoNew">0 ₽</span></p>
+      <p class="text-xs mt-2" id="timer">Осталось: —</p>
+    </div>
+
+    <div class="flex flex-wrap gap-4">
+      <a href="#" id="heroPhoneBtn" class="bg-rose hover:opacity-80 px-8 py-4 rounded-full font-medium transition shadow-lg">Записаться по телефону</a>
+      <a href="#services" class="border border-white/60 hover:bg-white/20 px-8 py-4 rounded-full font-medium transition">Все услуги и цены</a>
+    </div>
+
+    <div class="flex flex-wrap gap-8 mt-12 text-sm">
+      <div><span class="text-2xl font-bold" id="statYears">—</span><br>на рынке</div>
+      <div><span class="text-2xl font-bold" id="statClients">—</span><br>клиентов</div>
+      <div><span class="text-2xl font-bold" id="statRating">—</span><br>рейтинг в 2ГИС</div>
+      <div><span class="text-2xl font-bold" id="statMasters">—</span><br>мастеров</div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 md:py-20" style="background: var(--card);">
+  <div class="max-w-6xl mx-auto px-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="text-center animate-in">
+      <div class="text-4xl mb-3">✨</div>
+      <h3 class="font-semibold mb-2">Удобное расположение</h3>
+      <p class="text-sm opacity-70" id="advAddress">—</p>
+    </div>
+    <div class="text-center animate-in">
+      <div class="text-4xl mb-3">💅</div>
+      <h3 class="font-semibold mb-2">Полный спектр</h3>
+      <p class="text-sm opacity-70">Маникюр, педикюр, брови, ресницы</p>
+    </div>
+    <div class="text-center animate-in">
+      <div class="text-4xl mb-3">💳</div>
+      <h3 class="font-semibold mb-2">Удобная оплата</h3>
+      <p class="text-sm opacity-70">Наличные, карта, перевод, рассрочка</p>
+    </div>
+    <div class="text-center animate-in">
+      <div class="text-4xl mb-3">🕒</div>
+      <h3 class="font-semibold mb-2">Без выходных</h3>
+      <p class="text-sm opacity-70" id="advHours">—</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-8 bg-rose-soft">
+  <div class="max-w-6xl mx-auto px-4 text-center">
+    <p class="text-lg font-semibold rose mb-2">🕐 Счастливые часы</p>
+    <p class="opacity-80" id="happyHoursText">—</p>
+  </div>
+</section>
+
+<section class="py-16 md:py-24" style="background: var(--card);">
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <p class="rose uppercase tracking-[0.3em] text-xs mb-3">Калькулятор</p>
+      <h2 class="text-3xl md:text-4xl font-bold">Рассчитайте стоимость</h2>
+      <p class="text-sm opacity-60 mt-3">Выберите услуги — увидите итоговую сумму</p>
+    </div>
+    <div class="bg-rose-light p-8 rounded-3xl">
+      <div id="calcItems" class="space-y-3 mb-6"></div>
+      <div class="border-t border-rose/20 pt-6 flex justify-between items-center">
+        <span class="text-lg font-semibold">Итого:</span>
+        <span class="text-3xl font-bold rose" id="calcTotal">0 ₽</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="py-16 md:py-24 bg-rose-light">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="rose uppercase tracking-[0.3em] text-xs mb-3">Прайс-лист</p>
+      <h2 class="text-3xl md:text-4xl font-bold">Наши услуги и цены</h2>
+      <p class="text-sm opacity-60 mt-3">Цены указаны из открытых источников. Точную стоимость уточняйте по телефону.</p>
+    </div>
+    <div id="servicesContainer"></div>
+  </div>
+</section>
+
+<section id="promo" class="py-16 md:py-24" style="background: var(--card);">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="rose uppercase tracking-[0.3em] text-xs mb-3">Выгодные предложения</p>
+      <h2 class="text-3xl md:text-4xl font-bold">Акции месяца</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6" id="promoContainer"></div>
+  </div>
+</section>
+
+<section id="masters" class="py-16 md:py-24 bg-rose-light">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="rose uppercase tracking-[0.3em] text-xs mb-3">Наша команда</p>
+      <h2 class="text-3xl md:text-4xl font-bold">Наши мастера</h2>
+      <p class="text-sm opacity-60 mt-3">Пришлите имена, фото и специализации мастеров — они встанут сюда</p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="mastersContainer"></div>
+  </div>
+</section>
+
+<section id="gallery" class="py-16 md:py-24" style="background: var(--card);">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="rose uppercase tracking-[0.3em] text-xs mb-3">Портфолио</p>
+      <h2 class="text-3xl md:text-4xl font-bold">Наши работы</h2>
+      <p class="text-sm opacity-60 mt-3">Пришлите фото «до и после» — они встанут на эти места</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <div class="bg-rose-light p-6 rounded-3xl">
+        <p class="text-sm font-semibold mb-4 rose">До / После — маникюр</p>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="photo-slot h-48"><div class="photo-slot-icon">📷</div><p class="text-xs font-medium">Фото ДО</p></div>
+          <div class="photo-slot h-48"><div class="photo-slot-icon">📷</div><p class="text-xs font-medium">Фото ПОСЛЕ</p></div>
+        </div>
+      </div>
+      <div class="bg-rose-light p-6 rounded-3xl">
+        <p class="text-sm font-semibold mb-4 rose">До / После — брови</p>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="photo-slot h-48"><div class="photo-slot-icon">📷</div><p class="text-xs font-medium">Фото ДО</p></div>
+          <div class="photo-slot h-48"><div class="photo-slot-icon">📷</div><p class="text-xs font-medium">Фото ПОСЛЕ</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="galleryContainer"></div>
+  </div>
+</section>
+
+<section class="py-16 md:py-24 bg-rose-light">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="rose uppercase tracking-[0.3em] text-xs mb-3">Отзывы</p>
+      <h2 class="text-3xl md:text-4xl font-bold">Что говорят клиенты</h2>
+      <div class="flex items-center justify-center gap-6 mt-6 text-sm">
+        <div><span class="text-2xl font-bold rose" id="ratingYandex">—</span><br>Яндекс</div>
+        <div><span class="text-2xl font-bold rose" id="ratingGoogle">—</span><br>Google</div>
+        <div><span class="text-2xl font-bold rose" id="rating2gis">—</span><br>2ГИС</div>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6" id="reviewsContainer"></div>
+  </div>
+</section>
+
+<section class="py-16 md:py-24" style="background: var(--card);">
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="rose uppercase tracking-[0.3em] text-xs mb-3">Вопросы и ответы</p>
+      <h2 class="text-3xl md:text-4xl font-bold">Частые вопросы</h2>
+    </div>
+    <div class="space-y-4" id="faqContainer"></div>
+  </div>
+</section>
+
+<section id="contacts" class="py-16 md:py-24 bg-rose-light">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <p class="rose uppercase tracking-[0.3em] text-xs mb-3">Запись и контакты</p>
+      <h2 class="text-3xl md:text-4xl font-bold">Как нас найти и записаться</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12">
+      <div>
+        <h3 class="serif text-2xl font-bold mb-4">Контакты</h3>
+        <div class="space-y-4 opacity-80 mb-8">
+          <p>📍 г. <span id="contactCity">—</span>, <span id="contactAddress">—</span></p>
+          <p>📞 <a href="#" id="contactPhone" class="hover:text-rose underline">—</a></p>
+          <p>🕒 <span id="contactHours">—</span></p>
+          <p>💳 Наличные, карта, перевод, рассрочка</p>
+        </div>
+        <a href="#" id="contactPhoneBtn" class="inline-block bg-rose hover:opacity-80 text-white px-8 py-4 rounded-full font-medium transition mb-8">Позвонить сейчас</a>
+
+        <h3 class="serif text-2xl font-bold mb-4">Мы на карте</h3>
+        <div class="rounded-3xl overflow-hidden">
+          <iframe id="mapFrame" src="https://yandex.ru/map-widget/v1/?text=Воронеж&z=16" width="100%" height="300" frameborder="0" style="border:0; display:block;" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="p-8 rounded-3xl" style="background: var(--card);">
+          <h3 class="serif text-2xl font-bold mb-4">Форма записи</h3>
+          <form onsubmit="event.preventDefault(); alert('Демо-форма. Заявка не отправлена.');">
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Ваше имя</label>
+              <input type="text" required class="w-full px-4 py-3 border border-rose/30 rounded-2xl focus:outline-none focus:border-rose" style="background: var(--bg); color: var(--text);">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Телефон</label>
+              <input type="tel" required class="w-full px-4 py-3 border border-rose/30 rounded-2xl focus:outline-none focus:border-rose" style="background: var(--bg); color: var(--text);">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Услуга</label>
+              <select id="serviceSelect" class="w-full px-4 py-3 border border-rose/30 rounded-2xl focus:outline-none focus:border-rose" style="background: var(--bg); color: var(--text);"></select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Желаемая дата</label>
+              <input type="date" id="dateInput" required class="w-full px-4 py-3 border border-rose/30 rounded-2xl focus:outline-none focus:border-rose" style="background: var(--bg); color: var(--text);">
+            </div>
+            <div class="bg-rose-light border border-rose/20 rounded-2xl p-4 mb-4">
+              <div class="flex justify-between text-sm mb-2">
+                <span class="opacity-60">Стоимость:</span>
+                <span id="priceDisplay" class="font-semibold rose">—</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="opacity-60">Мастер:</span>
+                <span id="masterDisplay" class="font-semibold">—</span>
+              </div>
+            </div>
+            <button type="submit" class="w-full bg-rose hover:opacity-80 text-white py-4 rounded-2xl font-medium transition">Записаться</button>
+            <p class="text-xs opacity-50 text-center mt-4">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.</p>
+          </form>
+        </div>
+
+        <div class="p-8 rounded-3xl" style="background: var(--card);">
+          <h3 class="serif text-2xl font-bold mb-4">Задайте вопрос</h3>
+          <form onsubmit="event.preventDefault(); alert('Демо-форма. Вопрос не отправлен.');">
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Ваше имя</label>
+              <input type="text" required class="w-full px-4 py-3 border border-rose/30 rounded-2xl focus:outline-none focus:border-rose" style="background: var(--bg); color: var(--text);">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Телефон</label>
+              <input type="tel" required class="w-full px-4 py-3 border border-rose/30 rounded-2xl focus:outline-none focus:border-rose" style="background: var(--bg); color: var(--text);">
+            </div>
+            <div class="mb-4">
+              <label class="block text-sm font-medium mb-1">Ваш вопрос</label>
+              <textarea required rows="3" class="w-full px-4 py-3 border border-rose/30 rounded-2xl focus:outline-none focus:border-rose" style="background: var(--bg); color: var(--text);"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-rose hover:opacity-80 text-white py-4 rounded-2xl font-medium transition">Отправить вопрос</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-rose-soft py-8 text-center text-sm">
+  <p class="mb-2">© 2025 <span id="footerName">Салон</span>. Демо-версия сайта.</p>
+  <p class="text-xs opacity-70" id="footerLine">—</p>
+</footer>
+
+<script type="application/ld+json" id="schemaScript">{}</script>
+
+<!-- =================================================================
+     =============== КОНФИГУРАЦИЯ САЛОНА (МЕНЯЙ ЗДЕСЬ) ================
+     ================================================================= -->
+<script>
+const CONFIG = {
+  // === Основное ===
+  name: "Название салона",
+  shortName: "Название",
+  city: "Воронеж",
+  address: "ул. Примерная, 1",
+  addressShort: "на улице Примерной",
+  district: "в Центральном районе",
+  phone: "+7 (900) 000-00-00",
+  phoneRaw: "+79000000000",
+  hours: "Ежедневно 09:00–21:00",
+  hoursShort: "09:00–21:00",
+
+  // === Соцсети и мессенджеры ===
+  whatsapp: "79000000000",     // номер без +
+  telegram: "",                // без @
+  instagram: "",               // без @
+  vk: "",                      // без @
+
+  // === Цифры-достижения ===
+  yearsWork: "5 лет",
+  clients: "3000+",
+  mastersCount: "12",
+  rating2gis: "4.9",
+  ratingGoogle: "4.3",
+  ratingYandex: "5.0",
+  reviewsCount: "120",
+
+  // === Акция недели ===
+  promoTitle: "Маникюр + гель-лак",
+  promoOld: "1 800 ₽",
+  promoNew: "1 400 ₽",
+  promoDaysLeft: 2,
+
+  // === Счастливые часы ===
+  happyHours: "Скидка 20% на все услуги с понедельника по четверг, с 12:00 до 16:00",
+
+  // === Услуги (категории) ===
+  // Добавляй/убирай категории и услуги — всё отрисуется автоматически
+  services: [
+    {
+      icon: "💅",
+      title: "Маникюр",
+      items: [
+        { name: "Маникюр без покрытия", price: 600, time: "40 мин", master: "Мастер маникюра" },
+        { name: "Маникюр + покрытие гель-лак", price: 1400, time: "70 мин", master: "Мастер маникюра" }
+      ]
+    },
+    {
+      icon: "🦶",
+      title: "Педикюр",
+      items: [
+        { name: "Экспресс педикюр без покрытия", price: 800, time: "30 мин", master: "Мастер педикюра" },
+        { name: "Полный педикюр с покрытием", price: 1900, time: "60 мин", master: "Мастер педикюра" }
+      ]
+    },
+    {
+      icon: "👁️",
+      title: "Брови и ресницы",
+      items: [
+        { name: "Коррекция бровей", price: 500, time: "20 мин", master: "Мастер по бровям" },
+        { name: "Ламинирование ресниц", price: 1200, time: "60 мин", master: "Мастер по ресницам" }
+      ]
+    }
+  ],
+
+  // === Акции ===
+  promos: [
+    { label: "Хит", title: "Название акции", priceNew: "0 ₽", priceOld: "0 ₽", description: "Описание акции." },
+    { label: "Для новых клиентов", title: "Скидка 15% на первый визит", priceNew: "-15%", priceOld: "", description: "На любую услугу." },
+    { label: "Постоянным клиентам", title: "Каждый 10-й визит — бесплатно", priceNew: "10% кэшбэк", priceOld: "", description: "Кэшбэк на бонусный счёт." }
+  ],
+
+  // === Мастера ===
+  masters: [
+    { name: "Имя мастера", role: "Специализация", experience: "5 лет" },
+    { name: "Имя мастера", role: "Специализация", experience: "5 лет" },
+    { name: "Имя мастера", role: "Специализация", experience: "5 лет" },
+    { name: "Имя мастера", role: "Специализация", experience: "5 лет" }
+  ],
+
+  // === Отзывы ===
+  reviews: [
+    { rating: 5, text: "Текст отзыва клиента.", author: "Имя" },
+    { rating: 5, text: "Текст отзыва клиента.", author: "Имя" },
+    { rating: 5, text: "Текст отзыва клиента.", author: "Имя" }
+  ],
+
+  // === FAQ ===
+  faq: [
+    { q: "Как записаться на процедуру?", a: "Позвоните по телефону — администратор подберёт удобное время." },
+    { q: "Сколько держится покрытие гель-лак?", a: "При правильном уходе покрытие держится 2–3 недели." },
+    { q: "Можно ли оплатить картой?", a: "Да, мы принимаем наличные, банковские карты и переводы." }
+  ],
+
+  // === Галерея (количество плейсхолдеров) ===
+  galleryCount: 6
+};
+</script>
+
+<script>
+(function() {
+  document.title = `${CONFIG.name} — ${CONFIG.city} | Маникюр, педикюр, брови, ресницы`;
+  document.getElementById('headerName').textContent = CONFIG.shortName;
+  document.getElementById('heroCity').textContent = CONFIG.city;
+  document.getElementById('heroAddress').textContent = CONFIG.addressShort;
+  document.getElementById('heroDescription').textContent = `Маникюр, педикюр, покрытие гель-лак, брови, ресницы. Работаем ${CONFIG.hours.toLowerCase()}.`;
+  document.getElementById('advAddress').textContent = CONFIG.district;
+  document.getElementById('advHours').textContent = CONFIG.hours;
+  document.getElementById('contactCity').textContent = CONFIG.city;
+  document.getElementById('contactAddress').textContent = CONFIG.address;
+  document.getElementById('contactHours').textContent = CONFIG.hours;
+  document.getElementById('footerName').textContent = CONFIG.name;
+  document.getElementById('footerLine').textContent = `${CONFIG.address}, ${CONFIG.city} · ${CONFIG.phone}`;
+  document.getElementById('statYears').textContent = CONFIG.yearsWork;
+  document.getElementById('statClients').textContent = CONFIG.clients;
+  document.getElementById('statRating').textContent = CONFIG.rating2gis;
+  document.getElementById('statMasters').textContent = CONFIG.mastersCount;
+  document.getElementById('happyHoursText').textContent = CONFIG.happyHours;
+
+  ['headerPhone', 'heroPhoneBtn', 'contactPhone', 'contactPhoneBtn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = 'tel:' + CONFIG.phoneRaw;
+  });
+  document.getElementById('contactPhone').textContent = CONFIG.phone;
+
+  document.getElementById('whatsappFloat').href = `https://wa.me/${CONFIG.whatsapp}?text=Здравствуйте!%20Хочу%20записаться`;
+
+  document.getElementById('promoTitle').textContent = CONFIG.promoTitle;
+  document.getElementById('promoOld').textContent = CONFIG.promoOld;
+  document.getElementById('promoNew').textContent = CONFIG.promoNew;
+
+  document.getElementById('ratingYandex').textContent = CONFIG.ratingYandex;
+  document.getElementById('ratingGoogle').textContent = CONFIG.ratingGoogle;
+  document.getElementById('rating2gis').textContent = CONFIG.rating2gis;
+
+  const mapQuery = encodeURIComponent(`${CONFIG.city}, ${CONFIG.address}`);
+  document.getElementById('mapFrame').src = `https://yandex.ru/map-widget/v1/?text=${mapQuery}&z=16`;
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BeautySalon",
+    "name": CONFIG.name,
+    "address": { "@type": "PostalAddress", "streetAddress": CONFIG.address, "addressLocality": CONFIG.city, "addressCountry": "RU" },
+    "telephone": CONFIG.phoneRaw,
+    "openingHours": "Mo-Su " + CONFIG.hoursShort,
+    "priceRange": "₽"
+  };
+  document.getElementById('schemaScript').textContent = JSON.stringify(schema);
+
+  // === Услуги ===
+  const servicesContainer = document.getElementById('servicesContainer');
+  CONFIG.services.forEach(cat => {
+    const block = document.createElement('div');
+    block.className = 'mb-10';
+    block.innerHTML = `
+      <h3 class="text-2xl font-bold mb-6 flex items-center gap-3"><span class="text-3xl">${cat.icon}</span> ${cat.title}</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        ${cat.items.map(item => `
+          <div class="p-6 rounded-3xl card-hover" style="background: var(--card);">
+            <div class="flex justify-between items-start mb-2">
+              <span class="font-medium">${item.name}</span>
+              <span class="rose font-bold whitespace-nowrap ml-3">${item.price.toLocaleString('ru-RU')} ₽</span>
+            </div>
+            <p class="text-xs opacity-60">⏱ ${item.time}</p>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    servicesContainer.appendChild(block);
+  });
+
+  // === Калькулятор ===
+  const calcItems = document.getElementById('calcItems');
+  const allServices = CONFIG.services.flatMap(cat => cat.items);
+  calcItems.innerHTML = allServices.map(item => `
+    <label class="flex items-center justify-between p-3 rounded-2xl hover:bg-rose/10 cursor-pointer transition" style="background: var(--card);">
+      <span class="flex items-center gap-3">
+        <input type="checkbox" class="calc-checkbox w-5 h-5 accent-rose" data-price="${item.price}">
+        <span>${item.name}</span>
+      </span>
+      <span class="rose font-semibold">${item.price.toLocaleString('ru-RU')} ₽</span>
+    </label>
+  `).join('');
+
+  const calcTotal = document.getElementById('calcTotal');
+  calcItems.addEventListener('change', () => {
+    let total = 0;
+    calcItems.querySelectorAll('.calc-checkbox:checked').forEach(cb => {
+      total += parseInt(cb.getAttribute('data-price'));
+    });
+    calcTotal.textContent = total.toLocaleString('ru-RU') + ' ₽';
+  });
+
+  // === Акции ===
+  const promoContainer = document.getElementById('promoContainer');
+  promoContainer.innerHTML = CONFIG.promos.map(p => `
+    <div class="bg-rose-light p-8 rounded-3xl card-hover">
+      <p class="text-xs uppercase tracking-wider rose mb-3">${p.label}</p>
+      <h3 class="text-xl font-bold mb-3">${p.title}</h3>
+      <p class="text-3xl font-bold rose">${p.priceOld ? `<span class="strikethrough text-lg">${p.priceOld}</span> ` : ''}${p.priceNew}</p>
+      <p class="text-sm opacity-70 mt-3">${p.description}</p>
+    </div>
+  `).join('');
+
+  // === Мастера ===
+  const mastersContainer = document.getElementById('mastersContainer');
+  mastersContainer.innerHTML = CONFIG.masters.map(m => `
+    <div class="text-center p-6 rounded-3xl card-hover" style="background: var(--card);">
+      <div class="photo-slot w-28 h-28 mx-auto mb-4"><div class="photo-slot-icon">👤</div></div>
+      <h3 class="font-semibold text-lg opacity-70">${m.name}</h3>
+      <p class="text-sm opacity-60">${m.role}</p>
+      <p class="text-xs opacity-50 mt-2">Опыт: ${m.experience}</p>
+    </div>
+  `).join('');
+
+  // === Галерея ===
+  const galleryContainer = document.getElementById('galleryContainer');
+  galleryContainer.innerHTML = Array.from({length: CONFIG.galleryCount}, (_, i) => `
+    <div class="photo-slot h-64"><div class="photo-slot-icon">📷</div><p class="text-sm font-medium">Место для фото №${i+1}</p></div>
+  `).join('');
+
+  // === Отзывы ===
+  const reviewsContainer = document.getElementById('reviewsContainer');
+  reviewsContainer.innerHTML = CONFIG.reviews.map(r => `
+    <div class="p-8 rounded-3xl card-hover" style="background: var(--card);">
+      <div class="rose mb-3">${'★'.repeat(r.rating)}</div>
+      <p class="opacity-80 mb-4">«${r.text}»</p>
+      <p class="font-semibold opacity-60 text-sm">${r.author}</p>
+    </div>
+  `).join('');
+
+  // === FAQ ===
+  const faqContainer = document.getElementById('faqContainer');
+  faqContainer.innerHTML = CONFIG.faq.map(item => `
+    <details class="bg-rose-light p-6 rounded-3xl cursor-pointer">
+      <summary class="font-semibold">${item.q}</summary>
+      <p class="mt-3 opacity-70">${item.a}</p>
+    </details>
+  `).join('');
+
+  // === Форма записи ===
+  const serviceSelect = document.getElementById('serviceSelect');
+  serviceSelect.innerHTML = allServices.map(item => `
+    <option data-price="${item.price}" data-master="${item.master}">${item.name} — ${item.price.toLocaleString('ru-RU')} ₽</option>
+  `).join('');
+
+  const priceDisplay = document.getElementById('priceDisplay');
+  const masterDisplay = document.getElementById('masterDisplay');
+  function updateForm() {
+    const opt = serviceSelect.options[serviceSelect.selectedIndex];
+    if (!opt) return;
+    priceDisplay.textContent = opt.getAttribute('data-price') + ' ₽';
+    masterDisplay.textContent = opt.getAttribute('data-master');
+  }
+  serviceSelect.addEventListener('change', updateForm);
+  updateForm();
+
+  document.getElementById('dateInput').setAttribute('min', new Date().toISOString().split('T')[0]);
+
+  // === Таймер акции ===
+  function updateTimer() {
+    const end = new Date();
+    end.setDate(end.getDate() + CONFIG.promoDaysLeft);
+    end.setHours(23, 59, 59);
+    const diff = end - new Date();
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    const el = document.getElementById('timer');
+    if (el) el.textContent = `Осталось: ${days} д ${hours} ч ${mins} м ${secs} с`;
+  }
+  setInterval(updateTimer, 1000);
+  updateTimer();
+
+  // === Анимация при прокрутке ===
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('animate-in');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('section').forEach(s => observer.observe(s));
+})();
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('themeIcon').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('themeIcon').textContent = '☀️';
+  }
+})();
+</script>
+
+</body>
+</html>
